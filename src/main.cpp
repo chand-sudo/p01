@@ -1,20 +1,17 @@
-// Video Poker (Jacks or Better)
+// Video Poker 
 //
+//   ./build/game          -> TuiView     (FTXUI: colors + arrow keys)
 //   ./build/game --text   -> ConsoleView (plain cout/cin)
 //   ./build/game --test   -> rule tests, PASS/FAIL
-//   ./build/game          -> TuiView (FTXUI) -- added in Milestone 2;
-//                            until then it also runs the ConsoleView.
 
 #include "ConsoleView.hpp"
 #include "GameView.hpp"
 #include "Tests.hpp"
+#include "TuiView.hpp"
 #include "VideoPoker.hpp"
 
 #include <memory>
 #include <string>
-
-
-
 
 int main(int argc, char **argv) {
   std::string mode = (argc > 1) ? argv[1] : "";
@@ -23,12 +20,13 @@ int main(int argc, char **argv) {
 
   VideoPoker game;
 
-
-
-  
-  // Polymorphism: main only knows it has "some GameView".
+  // Polymorphism: main() does never know which kind of view it have.
+  // It only ever talks to it through a GameView pointer.
   std::unique_ptr<GameView> view;
-  view = std::make_unique<ConsoleView>(game); // M2: TuiView when not --text
+  if (mode == "--text")
+    view = std::make_unique<ConsoleView>(game);
+  else
+    view = std::make_unique<TuiView>(game);
 
   view->run();
   return 0;

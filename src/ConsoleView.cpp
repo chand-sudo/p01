@@ -98,8 +98,10 @@ bool ConsoleView::bettingTurn() {
   if (!parseInt(line, bet)) {
     std::cout << "  Please type a number.\n";
     return true;
+
+
   }
-  if (!game.deal(bet)) { // the GAME decides whether the bet is legal
+  if (!game.deal(bet)) { // the GAME decids wether the bet is legal
     if (bet > game.credits())
       std::cout << "  Not enough credits.\n";
     else
@@ -108,7 +110,7 @@ bool ConsoleView::bettingTurn() {
     return true;
   }
   showHand();
-  return true;
+  return true ;
 }
 
 
@@ -116,7 +118,7 @@ bool ConsoleView::bettingTurn() {
 
 
 bool ConsoleView::holdingTurn() {
-  std::cout << "Toggle holds (e.g. \"1 2\"), or press Enter to draw (q to quit): ";
+std::cout << "Toggle holds (e.g. \"1 2\"), or press Enter to draw (q to quit): ";
   std::string line;
   if (!std::getline(std::cin, line) || line == "q" || line == "Q")
     return false;
@@ -133,7 +135,7 @@ bool ConsoleView::holdingTurn() {
 
 
 
-  // Each number toggles one card. Bad tokens are reported, not fatal.
+  // Each number toggle the one card. Bad tokens are reported, not fata l.
   std::istringstream words(line);
   std::string word;
   bool anyBad = false;
@@ -144,7 +146,7 @@ bool ConsoleView::holdingTurn() {
   }
   if (anyBad)
     std::cout << "  Use card numbers 1-" << VideoPoker::HandSize
-              << ", separated by spaces.\n";
+              << ", seperated by spaces.\n";
   showHand();
   return true;
 }
